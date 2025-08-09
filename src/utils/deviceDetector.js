@@ -79,16 +79,38 @@ class DeviceDetector {
    * 该构造函数会收集并存储当前设备和浏览器的相关信息
   */
   constructor() {
-    // 获取并存储用户代理信息（浏览器标识信息），并将其转换为小写
     this.userAgent = navigator.userAgent.toLowerCase();
-    // 获取并存储平台信息（操作系统信息），并将其转换为小写
-    this.platform = navigator.platform.toLowerCase();
-    // 获取并存储设备的最大触摸点数，如果不存在则默认为0
+    // 使用现代API替代已弃用的platform属性
+    this.platform = this.getPlatformInfo();
     this.maxTouchPoints = navigator.maxTouchPoints || 0;
-    // 获取并存储屏幕的宽度（以像素为单位）
     this.screenWidth = window.screen.width;
-    // 获取并存储屏幕的高度（以像素为单位）
     this.screenHeight = window.screen.height;
+  }
+
+  /**
+   * 获取平台信息 - 使用现代API替代已弃用的navigator.platform
+   * @returns {string} 平台信息字符串
+   */
+  getPlatformInfo() {
+    // 优先使用现代的userAgentData API
+    if (navigator.userAgentData && navigator.userAgentData.platform) {
+      return navigator.userAgentData.platform.toLowerCase();
+    }
+
+    // 通过User-Agent字符串推断平台信息
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.includes('mac')) return 'macintel';
+    if (ua.includes('win')) return 'win32';
+    if (ua.includes('linux')) return 'linux';
+    if (ua.includes('android')) return 'android';
+    if (ua.includes('iphone') || ua.includes('ipad')) return 'ios';
+
+    // 降级方案：仍然使用platform但添加错误处理
+    try {
+      return navigator.platform ? navigator.platform.toLowerCase() : 'unknown';
+    } catch (e) {
+      return 'unknown';
+    }
   }
 
   /**
@@ -121,7 +143,7 @@ class DeviceDetector {
   isTablet() {
     // iPad检测（包括新版iPad的MacIntel平台标识）
     const isIPad = /ipad/i.test(this.userAgent) ||
-      (navigator.platform === 'MacIntel' && this.maxTouchPoints > 1);
+      (this.platform === 'macintel' && this.maxTouchPoints > 1);
 
     // Android平板检测
     const isAndroidTablet = /android/i.test(this.userAgent) &&
@@ -164,7 +186,7 @@ class DeviceDetector {
       screenWidth: this.screenWidth,   // 屏幕宽度
       screenHeight: this.screenHeight, // 屏幕高度
       userAgent: navigator.userAgent,   // 浏览器用户代理字符串
-      platform: navigator.platform,    // 操作系统平台
+      platform: this.platform,    // 操作系统平台
       maxTouchPoints: this.maxTouchPoints, // 最大触摸点数
       hasTouch: 'ontouchstart' in window  // 是否支持触摸事件
     };
