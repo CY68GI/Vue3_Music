@@ -1,0 +1,178 @@
+/* 全局主题样式 - 深色模式和浅色模式 */
+
+/* 默认浅色模式 */
+:root,
+[data-theme="light"] {
+  /* 主要颜色 */
+  --primary-color: #3498db;
+  --primary-hover: #2980b9;
+  --secondary-color: #2c3e50;
+
+  /* 背景颜色 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+
+  /* 文字颜色 */
+  --text-primary: #2c3e50;
+  --text-secondary: #6c757d;
+  --text-tertiary: #adb5bd;
+  --text-inverse: #ffffff;
+
+  /* 边框颜色 */
+  --border-color: #dee2e6;
+  --border-light: #e9ecef;
+  --border-dark: #adb5bd;
+
+  /* 阴影 */
+  --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-heavy: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+  /* 导航栏颜色 */
+  --nav-bg: #2c3e50;
+  --nav-text: #ecf0f1;
+  --nav-text-secondary: #bdc3c7;
+  --nav-hover: #34495e;
+  --nav-active: #3498db;
+
+  /* 输入框颜色 */
+  --input-bg: #ffffff;
+  --input-border: #ced4da;
+  --input-focus: #3498db;
+  --input-placeholder: #6c757d;
+
+  /* 播放器颜色 */
+  --player-bg: #ffffff;
+  --player-border: #dee2e6;
+}
+
+/* 深色模式 */
+[data-theme="dark"] {
+  /* 主要颜色 */
+  --primary-color: #3498db;
+  --primary-hover: #5dade2;
+  --secondary-color: #1a1a1a;
+
+  /* 背景颜色 */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+
+  /* 文字颜色 */
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --text-tertiary: #6c757d;
+  --text-inverse: #1a1a1a;
+
+  /* 边框颜色 */
+  --border-color: #404040;
+  --border-light: #2d2d2d;
+  --border-dark: #555555;
+
+  /* 阴影 */
+  --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-heavy: 0 8px 16px rgba(0, 0, 0, 0.5);
+
+  /* 导航栏颜色 */
+  --nav-bg: #1a1a1a;
+  --nav-text: #f8f9fa;
+  --nav-text-secondary: #adb5bd;
+  --nav-hover: #2d2d2d;
+  --nav-active: #3498db;
+
+  /* 输入框颜色 */
+  --input-bg: #2d2d2d;
+  --input-border: #404040;
+  --input-focus: #3498db;
+  --input-placeholder: #6c757d;
+
+  /* 播放器颜色 */
+  --player-bg: #2d2d2d;
+  --player-border: #404040;
+}
+
+/* 全局样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 主题过渡动画 */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* 通用工具类 */
+.theme-transition {
+  transition: all 0.3s ease;
+}
+
+.bg-primary {
+  background-color: var(--bg-primary);
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.border-color {
+  border-color: var(--border-color);
+}
+
+/* 深色模式适配的媒体查询 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #f8f9fa;
+    --text-secondary: #adb5bd;
+    --border-color: #404040;
+    --nav-bg: #1a1a1a;
+    --nav-text: #f8f9fa;
+    --nav-hover: #2d2d2d;
+    --input-bg: #2d2d2d;
+    --input-border: #404040;
+    --player-bg: #2d2d2d;
+    --player-border: #404040;
+  }
+}
